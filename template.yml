@@ -14,6 +14,26 @@ Parameters:
     Type: String
     Description: The name for a project pipeline stage, such as Staging or Prod, for which resources are provisioned and deployed.
     Default: ''
+  ComeInDBHost:
+    Type: String
+    Description: db host
+    Default: 'artemis.cluster-csl5nc2u4rsg.ap-northeast-1.rds.amazonaws.com'
+  ComeInDBPort:
+    Type: String
+    Description: db port
+    Default: '5432'
+  ComeInDBUsername:
+    Type: String
+    Description: db username
+    Default: 'postgres'
+  ComeInDBPassword:
+    Type: String
+    Description: db password
+    Default: 'Dg8HtJjwEJDugpqTx5dR'
+  ComeInDBInstance:
+    Type: String
+    Description: db instance
+    Default: 'comein'
 
 Globals:
   Function:
@@ -24,12 +44,22 @@ Globals:
       Role: !Ref CodeDeployRole
 
 Resources:
-  GetHelloWorld:
+  GetHelloWorldFunc:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub 'awscodestar-${ProjectId}-lambda-GetHelloWorld'
-      Handler: com.aws.codestar.projecttemplates.handler.HelloWorldHandler
+      FunctionName: !Sub 'awscodestar-${ProjectId}-lambda-GetHelloWorldFunc'
+      Handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest
+      Environment:
+        Variables:
+          spring_cloud_function_definition: getHelloWorld
+          DB_HOST: !Ref ComeInDBHost
+          DB_PORT: !Ref ComeInDBPort
+          DB_INSTANCE: !Ref ComeInDBInstance
+          DB_USERNAME: !Ref ComeInDBUsername
+          DB_PASSWORD: !Ref ComeInDBPassword
       Runtime: java11
+      Timeout: 30
+      MemorySize: 512
       Role:
         Fn::GetAtt:
         - LambdaExecutionRole
@@ -41,22 +71,6 @@ Resources:
             Path: /
             Method: get
 
-  PostHelloWorld:
-    Type: AWS::Serverless::Function
-    Properties:
-      FunctionName: !Sub 'awscodestar-${ProjectId}-lambda-PostHelloWorld'
-      Handler: com.aws.codestar.projecttemplates.handler.HelloWorldHandler
-      Runtime: java11
-      Role:
-        Fn::GetAtt:
-        - LambdaExecutionRole
-        - Arn
-      Events:
-        PostEvent:
-          Type: Api
-          Properties:
-            Path: /
-            Method: post
   LambdaExecutionRole:
     Description: Creating service role in IAM for AWS Lambda
     Type: AWS::IAM::Role
