@@ -158,7 +158,7 @@ Resources:
       FunctionName: !Ref MyCentaursFunc
       Action: lambda:InvokeFunction
       Principal: apigateway.amazonaws.com
-      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${ComeInRestApi}/*/GET/hello-world
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${ComeInRestApi}/*/POST/hello-world
 
   GetHelloWorldResource:
     Type: 'AWS::ApiGateway::Resource'
@@ -174,16 +174,16 @@ Resources:
     Properties:
       RestApiId: !Ref ComeInRestApi
       ResourceId: !Ref GetHelloWorldResource
-      HttpMethod: GET
+      HttpMethod: POST
       AuthorizationType: COGNITO_USER_POOLS
       AuthorizerId: !Ref ComeInAuthorizer
       Integration:
         Type: AWS
-        IntegrationHttpMethod: GET
+        IntegrationHttpMethod: POST
         Uri:  !Join ['', ['arn:aws:apigateway:', !Ref AWS::Region, ':lambda:path/2015-03-31/functions/', !GetAtt MyCentaursFunc.Arn, '/invocations']]
         PassthroughBehavior: WHEN_NO_TEMPLATES
         RequestParameters:
-           'integration.request.header.spring.cloud.function.definition' : 'postHelloWorld'
+          integration.request.header.spring.cloud.function.definition: 'postHelloWorld'
         RequestTemplates: 
           'application/json': !Ref ComeInRequestTemplate
         IntegrationResponses:
