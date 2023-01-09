@@ -1,0 +1,5 @@
+{
+	"headers": {
+	    "spring.cloud.function.definition": "postHelloWorld"
+	  }
+}
