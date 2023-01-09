@@ -182,8 +182,8 @@ Resources:
         IntegrationHttpMethod: POST
         Uri:  !Join ['', ['arn:aws:apigateway:', !Ref AWS::Region, ':lambda:path/2015-03-31/functions/', !GetAtt MyCentaursFunc.Arn, '/invocations']]
         PassthroughBehavior: WHEN_NO_TEMPLATES
-        RequestParameters:
-          integration.request.header.spring.cloud.function.definition: 'postHelloWorld'
+#        RequestParameters:
+#          integration.request.header.spring.cloud.function.definition: 'postHelloWorld'
         RequestTemplates: 
           'application/json': !Ref ComeInRequestTemplate
         IntegrationResponses:
