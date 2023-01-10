@@ -61,6 +61,14 @@ Parameters:
          "ref-name" : "$context.authorizer.claims.name",
          "sub":"$context.authorizer.claims.sub"   
         }, 
+      #set($header_params = $allParams.get('header'))
+      "headers" : {
+         "spring.cloud.function.definition" : '$$REPLACEMENT$$',
+          #foreach($paramName in $header_params.keySet())
+          "$paramName" : "$util.escapeJavaScript($header_params.get($paramName))"
+              #if($foreach.hasNext),#end
+          #end
+      },
       #set($path_params = $allParams.get('path'))
       "path-parameters" : {
           #foreach($paramName in $path_params.keySet())
@@ -184,6 +192,11 @@ Resources:
         PassthroughBehavior: WHEN_NO_TEMPLATES
 #        RequestParameters:
 #          integration.request.header.spring.cloud.function.definition: 'postHelloWorld'
+        Fn::Transform:
+          Name: "JavaMacroFunc"
+          Parameters:
+            replacement: "getHelloWorld"
+            target: '$$REPLACEMENT$$'
         RequestTemplates: 
           'application/json': !Ref ComeInRequestTemplate
         IntegrationResponses:

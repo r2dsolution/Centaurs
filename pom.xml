@@ -191,6 +191,10 @@
 
 	<repositories>
 		<repository>
+	        <id>thecomein-maven-central-store</id>
+	        <url>https://thecomein-091340909384.d.codeartifact.ap-southeast-1.amazonaws.com/maven/maven-central-store/</url>
+      </repository>
+		<repository>
 			<id>spring-snapshots</id>
 			<name>Spring Snapshots</name>
 			<url>https://repo.spring.io/snapshot</url>
@@ -226,4 +230,11 @@
 		</pluginRepository>
 	</pluginRepositories>
 
+<distributionManagement>
+  <repository>
+    <id>thecomein-maven-central-store</id>
+    <name>thecomein-maven-central-store</name>
+    <url>https://thecomein-091340909384.d.codeartifact.ap-southeast-1.amazonaws.com/maven/maven-central-store/</url>
+  </repository>
+</distributionManagement>
 </project>
