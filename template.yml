@@ -63,7 +63,7 @@ Parameters:
         }, 
       #set($header_params = $allParams.get('header'))
       "headers" : {
-         "spring.cloud.function.definition" : '$$REPLACEMENT$$',
+         "spring.cloud.function.definition" : "getHelloWorld",
           #foreach($paramName in $header_params.keySet())
           "$paramName" : "$util.escapeJavaScript($header_params.get($paramName))"
               #if($foreach.hasNext),#end
@@ -191,14 +191,14 @@ Resources:
         Uri:  !Join ['', ['arn:aws:apigateway:', !Ref AWS::Region, ':lambda:path/2015-03-31/functions/', !GetAtt MyCentaursFunc.Arn, '/invocations']]
         PassthroughBehavior: WHEN_NO_TEMPLATES
         RequestTemplates: 
-          'application/json': 
-            'Fn::Transform':
-              Name: 'String'
-              Parameters:
-                InputString: !Ref ComeInRequestTemplate
-                Operation: Replace
-                Old: '$$REPLACEMENT$$'
-                New: "getHelloWorld"
+          'application/json': !Ref ComeInRequestTemplate
+#            'Fn::Transform':
+#              Name: 'String'
+#              Parameters:
+#                InputString: !Ref ComeInRequestTemplate
+#                Operation: Replace
+#                Old: '$$REPLACEMENT$$'
+#                New: "getHelloWorld"
         IntegrationResponses:
           - StatusCode: 200
             ResponseTemplates:
