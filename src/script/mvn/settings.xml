@@ -20,4 +20,12 @@
     <activeProfiles>
         <activeProfile>default</activeProfile>
     </activeProfiles>
+    <mirrors>
+  <mirror>
+    <id>codeartifact</id>
+    <name>thecomein-comein-spring</name>
+    <url>https://thecomein-091340909384.d.codeartifact.ap-southeast-1.amazonaws.com/maven/comein-spring/</url>
+    <mirrorOf>*</mirrorOf>
+  </mirror>
+  </mirrors>
 </settings>
