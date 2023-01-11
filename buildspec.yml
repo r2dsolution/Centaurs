@@ -11,9 +11,10 @@ phases:
     commands:
       - export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain thecomein --domain-owner 091340909384 --region ap-southeast-1 --query authorizationToken --output text`
       - echo $CODEARTIFACT_AUTH_TOKEN
-      - sed 's/CODEARTIFACT_AUTH_TOKEN/'`echo $CODEARTIFACT_AUTH_TOKEN`'/' src/script/mvn/settings.xml
-      - cat src/script/mvn/settings.xml
       - rm -f ~/.m2/settings.xml
+      - rm -f src/script/mvn/settings.xml
+      - sed 's/CODEARTIFACT_AUTH_TOKEN/'`echo $CODEARTIFACT_AUTH_TOKEN`'/' src/script/mvn/template_settings.xml > src/script/mvn/settings.xml
+      - cat src/script/mvn/settings.xml
       - cp src/script/mvn/settings.xml ~/.m2/settings.xml
       - echo Test started on `date`
       - mvn clean compile test

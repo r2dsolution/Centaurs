@@ -3,7 +3,7 @@
         <server>
             <id>codeartifact</id>
             <username>aws</username>
-            <password>CODEARTIFACT_AUTH_TOKEN</password>
+            <password>eyJ2ZXIiOjEsImlzdSI6MTY3MzQ2MDI5MSwiZW5jIjoiQTEyOEdDTSIsInRhZyI6ImdGbmZ6QUUtT3VaN1BIcmpsQ05pQkEiLCJleHAiOjE2NzM1MDM0OTEsImFsZyI6IkExMjhHQ01LVyIsIml2IjoiVlZ0bGx6ZnU2bGFaNFlmSyJ9.yfeyErj6pMIJsjrG1qhWKQ.L3wBs8ZS9PbnKfgO.-hOfs1Q0rfQGOcglezxg2kx49agyWHig7NbNxnaj4hRipNZECM72YDH8Ej16rtKUTcb7Og6TO4lC-jHCtuAxynQ-7nekipHRA_2tE8Vl_VM0M0voiwysgC79UsFGnm8etWLqWEKLRl6KOVm9WipK10u9vF7RiQzivsYGY4OxNeGLohXp1WWG6gRGgs15W7OTvdpqePgHNc5NLvLBk1hdCe5JXNyX5jEfXe2UQ1QcUhBIZhC2MtoUGteUDk2lAi0qHAzoKj9et9R2HqRpDqEv2_TIoG9hfZ9yIdRD2j2zzV9Ms54my-5c8kNusXFYCCTN4c2G761Bn7pMkR-jTg4mCr735qPEHRd3EDACg9m5MwcG6F6vPxR0dqwfM-mbOs_990YaVrBbPKfQSWg2CAmqwnhwOCWSkyyt4TCcvTyBG9_llGCDsnlZbRms7ETGjhiFgRYxJkxNVA1-vSWCK5NO5GyHxLP5cG9K0ZXoP46NfyTNtJOlSgXCodQydWMQ8cFO2vQ_xfDvZ3BLYN8ANi4l1Jhjbt0WrCk0dUatVnBnJQ2HWfb-xHY01q9Dyk-o8qj1w-3yeNRWKcVURXb673SH5deKK9wrOMYuck9nKEXnSPNienan1TL4gNkZGNRKn3io8vopFoDpgb40vlu1DB_aTMH8582OkSgeQHJ1y1X7hmsQOnT0vLbfmAZm_THOnKwulqMQn91KGxS_eSMOl0xEtjjZ5fncnRNbgy4S5_t3zHPjaRV9zmPgB-xghaYh4Ube3S7O4maGI4eYQioBddSlHpXTkJs5UvUH9OTLoTvYSOUhtrWJx714kZgR2tYLHKw3vsz6dlqCcpW9bbdxmjEOHAXKhFB1MGppg0622smVKhTkw46sJx3eC03rQlL_VZ_A-_akZ66JYJlSlleOfoXeXSYW-xplAVE3Oc9oDgiFgYIGJQ.vZwVCTt3riZk7fwghwqOQw</password>
         </server>
     </servers>
     <profiles>
