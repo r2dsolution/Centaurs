@@ -191,7 +191,8 @@
 
 	<repositories>
 		<repository>
-	        <id>thecomein-maven-central-store</id>
+	        <id>codeartifact</id>
+            <name>codeartifact</name>
 	        <url>https://thecomein-091340909384.d.codeartifact.ap-southeast-1.amazonaws.com/maven/maven-central-store/</url>
       </repository>
 		<repository>
