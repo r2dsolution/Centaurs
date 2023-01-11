@@ -49,6 +49,10 @@ Parameters:
   ComeInRequestTemplate:
     Type: String
     Description: request-template
+    Default: '{"json-body" : $input.json('$'),"headers" : {"spring.cloud.function.definition" : "${SpringFuncName}"} }'
+  ComeInRequestTemplate2:
+    Type: String
+    Description: request-template2
     Default: |
       #set($allParams = $input.params())
       {
