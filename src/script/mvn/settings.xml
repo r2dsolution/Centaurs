@@ -12,7 +12,7 @@
             <repositories>
                 <repository>
                     <id>codeartifact</id>
-                    <url>https://thecomein-091340909384.d.codeartifact.ap-southeast-1.amazonaws.com/maven/maven-central-store/</url>
+                    <url>https://thecomein-091340909384.d.codeartifact.ap-southeast-1.amazonaws.com/maven/comein-spring/</url>
                 </repository>
             </repositories>
         </profile>

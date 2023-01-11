@@ -63,7 +63,7 @@ Parameters:
         }, 
       #set($header_params = $allParams.get('header'))
       "headers" : {
-         "spring.cloud.function.definition" : "getHelloWorld"
+         "spring.cloud.function.definition" : "$$REPLACEMENT$$"
           #if(!$header_params.isEmpty),#end
           #foreach($paramName in $header_params.keySet())
           "$paramName" : "$util.escapeJavaScript($header_params.get($paramName))"
@@ -193,14 +193,14 @@ Resources:
         PassthroughBehavior: WHEN_NO_TEMPLATES
         RequestTemplates: 
           'application/json': 
-            !Ref ComeInRequestTemplate
-#            'Fn::Transform':
-#              Name: 'String'
-#              Parameters:
-#                InputString: !Ref ComeInRequestTemplate
-#                Operation: Replace
-#                Old: '$$REPLACEMENT$$'
-#                New: "getHelloWorld"
+#            !Ref ComeInRequestTemplate
+            'Fn::Transform':
+              Name: 'String'
+              Parameters:
+                InputString: !Ref ComeInRequestTemplate
+                Operation: Replace
+                Old: "$$REPLACEMENT$$"
+                New: "getHelloWorld"
         IntegrationResponses:
           - StatusCode: 200
             ResponseTemplates:
