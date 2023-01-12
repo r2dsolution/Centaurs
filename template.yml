@@ -14,12 +14,39 @@ Parameters:
     Type: String
     Description: The name for a project pipeline stage, such as Staging or Prod, for which resources are provisioned and deployed.
     Default: ''
-  ComeInFuncSpringName:
+  ComeInFuncTemplate:
     Type: String
     Description: this is function name of lambda
-    Default: ''
- 
-      
+    Default: "#set($allParams = $input.params())\n{\n\"body\" : \"$util.escapeJavaScript($input.body)\"\
+      ,\n\"json-body\" : $input.json('$'),\n\"path\" : \"$context.resourcePath\",\n\
+      \"profile\":{\n   \"email\" : \"$context.authorizer.claims.email\",\n   \"comein-id\"\
+      :\"$context.authorizer.claims['custom:comein_id']\",\n   \"ref-name\" : \"$context.authorizer.claims.name\"\
+      ,\n   \"sub\" : \"$context.authorizer.claims.sub\"\n  }, \n#set($header_params\
+      \ = $allParams.get('header'))\n\"headers\" : {\n  \"spring.cloud.function.definition\"\
+      \ : \"${ComeInFuncName}\"\n    #if(!$header_params.isEmpty),#end\n      #foreach($paramName\
+      \ in $header_params.keySet())\n        \"$paramName\" : \"$util.escapeJavaScript($header_params.get($paramName))\"\
+      \n        #if($foreach.hasNext),#end\n      #end\n},\n#set($path_params = $allParams.get('path'))\n\
+      \"path-parameters\" : {\n    #foreach($paramName in $path_params.keySet())\n\
+      \    \"$paramName\" : \"$util.escapeJavaScript($path_params.get($paramName))\"\
+      \n        #if($foreach.hasNext),#end\n    #end\n},\n#set($query_params = $allParams.get('querystring'))\n\
+      \"query-string-parameters\" : {\n    #foreach($paramName in $query_params.keySet())\n\
+      \    \"$paramName\" : \"$util.escapeJavaScript($query_params.get($paramName))\"\
+      \n        #if($foreach.hasNext),#end\n    #end\n},\n\"stage-variables\" : {\n\
+      #foreach($key in $stageVariables.keySet())\n\"$key\" : \"$util.escapeJavaScript($stageVariables.get($key))\"\
+      \n    #if($foreach.hasNext),#end\n#end\n},\n\"request-context\" : {\n    \"\
+      account-id\" : \"$context.identity.accountId\",\n    \"api-id\" : \"$context.apiId\"\
+      ,\n    \"api-key\" : \"$context.identity.apiKey\",\n    \"authorizer-principal-id\"\
+      \ : \"$context.authorizer.principalId\",\n    \"caller\" : \"$context.identity.caller\"\
+      ,\n    \"cognito-authentication-provider\" : \"$context.identity.cognitoAuthenticationProvider\"\
+      ,\n    \"cognito-authentication-type\" : \"$context.identity.cognitoAuthenticationType\"\
+      ,\n    \"cognito-identity-id\" : \"$context.identity.cognitoIdentityId\",\n\
+      \    \"cognito-identity-pool-id\" : \"$context.identity.cognitoIdentityPoolId\"\
+      ,\n    \"http-method\" : \"$context.httpMethod\",\n    \"stage\" : \"$context.stage\"\
+      ,\n    \"source-ip\" : \"$context.identity.sourceIp\",\n    \"user\" : \"$context.identity.user\"\
+      ,\n    \"user-agent\" : \"$context.identity.userAgent\",\n    \"user-arn\" :\
+      \ \"$context.identity.userArn\",\n    \"request-id\" : \"$context.requestId\"\
+      ,\n    \"resource-id\" : \"$context.resourceId\",\n    \"resource-path\" : \"\
+      $context.resourcePath\"\n    }\n}\n    \n"
   ComeInDBHost:
     Type: String
     Description: db host
@@ -198,7 +225,10 @@ Resources:
         Uri:  !Join ['', ['arn:aws:apigateway:', !Ref AWS::Region, ':lambda:path/2015-03-31/functions/', !GetAtt MyCentaursFunc.Arn, '/invocations']]
         PassthroughBehavior: WHEN_NO_TEMPLATES
         RequestTemplates: 
-          'application/json': !Ref ComeInRequestTemplate
+#          'application/json': !Ref ComeInRequestTemplate
+          'application/json': !Sub
+            - !Ref ComeInFuncTemplate
+            - ComeInFuncName: getHelloWorld
         IntegrationResponses:
           - StatusCode: 200
             ResponseTemplates:
