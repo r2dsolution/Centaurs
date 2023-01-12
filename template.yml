@@ -192,10 +192,10 @@ Resources:
         Uri:  !Join ['', ['arn:aws:apigateway:', !Ref AWS::Region, ':lambda:path/2015-03-31/functions/', !GetAtt MyCentaursFunc.Arn, '/invocations']]
         PassthroughBehavior: WHEN_NO_TEMPLATES
         RequestTemplates: 
-          'application/json': !Ref ComeInRequestTemplate
-#          'application/json': !Sub 
-#             - !Ref ComeInRequestTemplate
-#             - SpringFuncName: "getHelloWorld"
+#          'application/json': !Ref ComeInRequestTemplate
+          'application/json': !Sub 
+             - "www.${SpringFuncName}"
+             - SpringFuncName: "getHelloWorld"
         IntegrationResponses:
           - StatusCode: 200
             ResponseTemplates:
