@@ -25,7 +25,7 @@ Parameters:
   ComeInDBUsername:
     Type: String
     Description: db username
-    Default: 'postgres'
+    Default: 'comein'
   ComeInDBPassword:
     Type: String
     Description: db password
