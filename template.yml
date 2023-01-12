@@ -17,7 +17,7 @@ Parameters:
   ComeInDBHost:
     Type: String
     Description: db host
-    Default: 'artemis.cluster-csl5nc2u4rsg.ap-northeast-1.rds.amazonaws.com'
+    Default: 'comeindb2.cstlg3ladsl5.ap-southeast-1.rds.amazonaws.com'
   ComeInDBPort:
     Type: String
     Description: db port
@@ -29,7 +29,7 @@ Parameters:
   ComeInDBPassword:
     Type: String
     Description: db password
-    Default: 'Dg8HtJjwEJDugpqTx5dR'
+    Default: 'q2deqkTna5GyxxHlkR1d'
   ComeInDBInstance:
     Type: String
     Description: db instance
