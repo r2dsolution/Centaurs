@@ -17,7 +17,7 @@ Parameters:
   ComeInFuncSpringName:
     Type: String
     Description: this is function name of lambda
-    Default: |
+    Default: !Base64 |
       {
         "name" : "${SpringFuncName}"
       }'
