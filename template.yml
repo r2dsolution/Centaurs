@@ -17,7 +17,8 @@ Parameters:
   ComeInFuncSpringName:
     Type: String
     Description: this is function name of lambda
-    Default: '{
+    Default: |
+      {
         "name" : "${SpringFuncName}"
       }'
  
