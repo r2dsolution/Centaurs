@@ -14,6 +14,10 @@ Parameters:
     Type: String
     Description: The name for a project pipeline stage, such as Staging or Prod, for which resources are provisioned and deployed.
     Default: ''
+  ComeInFuncSpringName:
+    Type: String
+    Description: this is function name of lambda
+    Default: "{\"name\":\"${SpringFuncName}\"}"
   ComeInDBHost:
     Type: String
     Description: db host
@@ -194,7 +198,7 @@ Resources:
         RequestTemplates: 
 #          'application/json': !Ref ComeInRequestTemplate
           'application/json': !Sub 
-             - "{\"name\":\"${SpringFuncName}\"}"
+             - !Ref ComeInFuncSpringName
              - SpringFuncName: "getHelloWorld"
         IntegrationResponses:
           - StatusCode: 200
