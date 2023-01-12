@@ -15,14 +15,34 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 import com.r2dsolution.comein.centaurs.function.ComeInAPIRequest;
 import com.r2dsolution.comein.centaurs.function.ComeInAPIResponse;
 import com.r2dsolution.comein.centaurs.function.IFunction;
+import com.r2dsolution.comein.centaurs.function.api.ListBookingByEmailFunc;
 
 
 @Configuration
 @ComponentScan({"com.r2dsolution.comein.centaurs.function","com.r2dsolution.comein.centaurs.business","com.r2dsolution.comein.centaurs.client"})
-//@EnableJpaRepositories(basePackages = "com.r2dsolution.comein.centaurs.repository")
+@EnableJpaRepositories(basePackages = "com.r2dsolution.comein.centaurs.repository")
 public class AppFunctionConfig {
 	
+	@Autowired
+	ListBookingByEmailFunc listBookingByEmailFunc;
 	
+	@Bean
+	public Function<ComeInAPIRequest, ComeInAPIResponse> postListBookingByEmail() throws Exception{
+		System.out.println("init....................listBookingByEmail");
+		return request ->  doExecute(listBookingByEmailFunc,request );
+			
+	}
+	
+	@Bean
+	public Function<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> postTest(){
+		System.out.println("init....................test");
+		return request -> {
+			APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
+			response.setBody("service is up.");
+			return response;
+		};
+		
+	}
 	
 	@Bean
 	public Function<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> getHelloWorld(){
