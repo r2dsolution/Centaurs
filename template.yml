@@ -17,10 +17,7 @@ Parameters:
   ComeInFuncSpringName:
     Type: String
     Description: this is function name of lambda
-    Default: !Base64 |
-      {
-        "name" : "${SpringFuncName}"
-      }'
+    Default: ''
  
       
   ComeInDBHost:
@@ -203,7 +200,70 @@ Resources:
         RequestTemplates: 
 #          'application/json': !Ref ComeInRequestTemplate
           'application/json': !Sub 
-             - !Ref ComeInFuncSpringName
+             - |
+      #set($allParams = $input.params())
+      {
+      "body" : "$util.escapeJavaScript($input.body)",
+      "json-body" : $input.json('$'),
+      "path" : "$context.resourcePath",
+      "profile":{
+         "email" : "$context.authorizer.claims.email",
+         "comein-id":"$context.authorizer.claims['custom:comein_id']",
+         "ref-name" : "$context.authorizer.claims.name",
+         "sub" : "$context.authorizer.claims.sub"
+        }, 
+      #set($header_params = $allParams.get('header'))
+      "headers" : {
+        "spring.cloud.function.definition" : "getHelloWorld"
+          #if(!$header_params.isEmpty),#end
+            #foreach($paramName in $header_params.keySet())
+              "$paramName" : "$util.escapeJavaScript($header_params.get($paramName))"
+              #if($foreach.hasNext),#end
+            #end
+      },
+      #set($path_params = $allParams.get('path'))
+      "path-parameters" : {
+          #foreach($paramName in $path_params.keySet())
+          "$paramName" : "$util.escapeJavaScript($path_params.get($paramName))"
+              #if($foreach.hasNext),#end
+          #end
+      },
+      #set($query_params = $allParams.get('querystring'))
+      "query-string-parameters" : {
+          #foreach($paramName in $query_params.keySet())
+          "$paramName" : "$util.escapeJavaScript($query_params.get($paramName))"
+              #if($foreach.hasNext),#end
+          #end
+      },
+      "stage-variables" : {
+      #foreach($key in $stageVariables.keySet())
+      "$key" : "$util.escapeJavaScript($stageVariables.get($key))"
+          #if($foreach.hasNext),#end
+      #end
+      },
+      "request-context" : {
+          "account-id" : "$context.identity.accountId",
+          "api-id" : "$context.apiId",
+          "api-key" : "$context.identity.apiKey",
+          "authorizer-principal-id" : "$context.authorizer.principalId",
+          "caller" : "$context.identity.caller",
+          "cognito-authentication-provider" : "$context.identity.cognitoAuthenticationProvider",
+          "cognito-authentication-type" : "$context.identity.cognitoAuthenticationType",
+          "cognito-identity-id" : "$context.identity.cognitoIdentityId",
+          "cognito-identity-pool-id" : "$context.identity.cognitoIdentityPoolId",
+          "http-method" : "$context.httpMethod",
+          "stage" : "$context.stage",
+          "source-ip" : "$context.identity.sourceIp",
+          "user" : "$context.identity.user",
+          "user-agent" : "$context.identity.userAgent",
+          "user-arn" : "$context.identity.userArn",
+          "request-id" : "$context.requestId",
+          "resource-id" : "$context.resourceId",
+          "resource-path" : "$context.resourcePath"
+          }
+      }
+      
+      
              - SpringFuncName: "getHelloWorld"
         IntegrationResponses:
           - StatusCode: 200
