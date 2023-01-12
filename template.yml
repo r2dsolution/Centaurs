@@ -199,7 +199,7 @@ Resources:
         PassthroughBehavior: WHEN_NO_TEMPLATES
         RequestTemplates: 
 #          'application/json': !Ref ComeInRequestTemplate
-          'application/json': |
+          'application/json': !Base64 |
       #set($allParams = $input.params())
       {
       "body" : "$util.escapeJavaScript($input.body)",
