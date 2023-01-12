@@ -17,7 +17,7 @@ Parameters:
   ComeInFuncSpringName:
     Type: String
     Description: this is function name of lambda
-    Default: '{\"name\":\"${SpringFuncName}\"}'
+    Default: {"name":"${SpringFuncName}"}
   ComeInDBHost:
     Type: String
     Description: db host
