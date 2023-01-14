@@ -20,7 +20,7 @@ import com.r2dsolution.comein.centaurs.repository.BookingInfoRepository;
 
 
 @Component
-public class ListBookingByEmailFunc extends ComeInFunction{
+public class ListHotelBookingByEmailFunc extends ComeInFunction{
 	
 	@Autowired
 	BookingInfoRepository repo;

@@ -15,8 +15,9 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 import com.r2dsolution.comein.centaurs.function.ComeInAPIRequest;
 import com.r2dsolution.comein.centaurs.function.ComeInAPIResponse;
 import com.r2dsolution.comein.centaurs.function.IFunction;
-import com.r2dsolution.comein.centaurs.function.api.ListBookingByEmailFunc;
+import com.r2dsolution.comein.centaurs.function.api.ListHotelBookingByEmailFunc;
 import com.r2dsolution.comein.centaurs.function.api.ListTourBookingByEmailFunc;
+import com.r2dsolution.comein.centaurs.function.api.ViewHotelBookingByBookNOFunc;
 
 
 @Configuration
@@ -25,11 +26,14 @@ import com.r2dsolution.comein.centaurs.function.api.ListTourBookingByEmailFunc;
 public class AppFunctionConfig {
 	
 	@Autowired
-	ListBookingByEmailFunc listBookingByEmailFunc;
+	ListHotelBookingByEmailFunc listHotelBookingByEmailFunc;
 	
 	
 	@Autowired
 	ListTourBookingByEmailFunc listTourBookingByEmailFunc;
+	
+	@Autowired
+	ViewHotelBookingByBookNOFunc viewHotelBookingByBookNOFunc;
 	
 	@Bean
 	public Function<ComeInAPIRequest, ComeInAPIResponse> postListTourBookingByEmail() throws Exception{
@@ -39,9 +43,16 @@ public class AppFunctionConfig {
 	}
 	
 	@Bean
+	public Function<ComeInAPIRequest, ComeInAPIResponse> postViewHotelBookingByBookNO() throws Exception{
+		System.out.println("init....................viewHotelBookingByBookNO");
+		return request ->  doExecute(viewHotelBookingByBookNOFunc,request );
+			
+	}
+	
+	@Bean
 	public Function<ComeInAPIRequest, ComeInAPIResponse> postListBookingByEmail() throws Exception{
 		System.out.println("init....................listBookingByEmail");
-		return request ->  doExecute(listBookingByEmailFunc,request );
+		return request ->  doExecute(listHotelBookingByEmailFunc,request );
 			
 	}
 	
