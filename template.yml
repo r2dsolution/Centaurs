@@ -63,8 +63,7 @@ Parameters:
         }, 
       #set($header_params = $allParams.get('header'))
       "headers" : {
-        "spring.cloud.function.definition" : "getHelloWorld"
-          #if(!$header_params.isEmpty),#end
+        "spring.cloud.function.definition" : "getHelloWorld" #if($header_params.size() > 0),#end
             #foreach($paramName in $header_params.keySet())
               "$paramName" : "$util.escapeJavaScript($header_params.get($paramName))"
               #if($foreach.hasNext),#end
@@ -129,8 +128,7 @@ Parameters:
         }, 
       #set($header_params = $allParams.get('header'))
       "headers" : {
-        "spring.cloud.function.definition" : "getHelloWorld"
-          #if(!$header_params.isEmpty),#end
+        "spring.cloud.function.definition" : "getHelloWorld" #if($header_params.size() > 0),#end
             #foreach($paramName in $header_params.keySet())
               "$paramName" : "$util.escapeJavaScript($header_params.get($paramName))"
               #if($foreach.hasNext),#end
@@ -195,8 +193,7 @@ Parameters:
         }, 
       #set($header_params = $allParams.get('header'))
       "headers" : {
-        "spring.cloud.function.definition" : "postHelloWorld"
-          #if(!$header_params.isEmpty),#end
+        "spring.cloud.function.definition" : "postHelloWorld" #if($header_params.size() > 0),#end
             #foreach($paramName in $header_params.keySet())
               "$paramName" : "$util.escapeJavaScript($header_params.get($paramName))"
               #if($foreach.hasNext),#end
@@ -261,8 +258,7 @@ Parameters:
         }, 
       #set($header_params = $allParams.get('header'))
       "headers" : {
-        "spring.cloud.function.definition" : "postTest"
-          #if(!$header_params.isEmpty),#end
+        "spring.cloud.function.definition" : "postTest" #if($header_params.size() > 0),#end
             #foreach($paramName in $header_params.keySet())
               "$paramName" : "$util.escapeJavaScript($header_params.get($paramName))"
               #if($foreach.hasNext),#end
@@ -328,8 +324,7 @@ Parameters:
         }, 
       #set($header_params = $allParams.get('header'))
       "headers" : {
-        "spring.cloud.function.definition" : "postListBookingByEmail"
-          #if(!$header_params.isEmpty),#end
+        "spring.cloud.function.definition" : "postListBookingByEmail" #if($header_params.size() > 0),#end
             #foreach($paramName in $header_params.keySet())
               "$paramName" : "$util.escapeJavaScript($header_params.get($paramName))"
               #if($foreach.hasNext),#end
@@ -395,8 +390,7 @@ Parameters:
         }, 
       #set($header_params = $allParams.get('header'))
       "headers" : {
-        "spring.cloud.function.definition" : "postListTourBookingByEmail"
-          #if(!$header_params.isEmpty),#end
+        "spring.cloud.function.definition" : "postListTourBookingByEmail" #if($header_params.size() > 0),#end
             #foreach($paramName in $header_params.keySet())
               "$paramName" : "$util.escapeJavaScript($header_params.get($paramName))"
               #if($foreach.hasNext),#end
@@ -486,8 +480,8 @@ Resources:
           DB_USERNAME: !Ref ComeInDBUsername
           DB_PASSWORD: !Ref ComeInDBPassword
       Runtime: java11
-      Timeout: 30
-      MemorySize: 512
+      Timeout: 60
+      MemorySize: 1024
       Role:
         Fn::GetAtt:
         - LambdaExecutionRole
