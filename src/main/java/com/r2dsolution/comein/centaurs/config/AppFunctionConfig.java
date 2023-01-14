@@ -15,8 +15,10 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 import com.r2dsolution.comein.centaurs.function.ComeInAPIRequest;
 import com.r2dsolution.comein.centaurs.function.ComeInAPIResponse;
 import com.r2dsolution.comein.centaurs.function.IFunction;
+import com.r2dsolution.comein.centaurs.function.api.DeleteHotelBookingKYCFunc;
 import com.r2dsolution.comein.centaurs.function.api.ListHotelBookingByEmailFunc;
 import com.r2dsolution.comein.centaurs.function.api.ListTourBookingByEmailFunc;
+import com.r2dsolution.comein.centaurs.function.api.ListTourTicketByDateFunc;
 import com.r2dsolution.comein.centaurs.function.api.ViewHotelBookingByBookNOFunc;
 
 
@@ -34,6 +36,26 @@ public class AppFunctionConfig {
 	
 	@Autowired
 	ViewHotelBookingByBookNOFunc viewHotelBookingByBookNOFunc;
+	
+	@Autowired
+	DeleteHotelBookingKYCFunc deleteHotelBookingKYCFunc;
+	
+	@Autowired
+	ListTourTicketByDateFunc listTourTicketByDateFunc;
+	
+	@Bean
+	public Function<ComeInAPIRequest, ComeInAPIResponse> postListTourTicketByDate() throws Exception{
+		System.out.println("init....................listTourTicketByDate");
+		return request ->  doExecute(listTourTicketByDateFunc,request );
+			
+	}
+	
+	@Bean
+	public Function<ComeInAPIRequest, ComeInAPIResponse> postDeleteHotelBookingKYC() throws Exception{
+		System.out.println("init....................deleteHotelBookingKYC");
+		return request ->  doExecute(deleteHotelBookingKYCFunc,request );
+			
+	}
 	
 	@Bean
 	public Function<ComeInAPIRequest, ComeInAPIResponse> postListTourBookingByEmail() throws Exception{
