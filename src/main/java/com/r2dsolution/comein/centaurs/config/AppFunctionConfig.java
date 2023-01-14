@@ -20,7 +20,7 @@ import com.r2dsolution.comein.centaurs.function.api.ListHotelBookingByEmailFunc;
 import com.r2dsolution.comein.centaurs.function.api.ListTourBookingByEmailFunc;
 import com.r2dsolution.comein.centaurs.function.api.ListTourTicketByDateFunc;
 import com.r2dsolution.comein.centaurs.function.api.ViewHotelBookingByBookNOFunc;
-
+import com.r2dsolution.comein.centaurs.function.api.ViewTourTicketByTourIdFunc;
 
 @Configuration
 @ComponentScan({"com.r2dsolution.comein.centaurs.function","com.r2dsolution.comein.centaurs.business","com.r2dsolution.comein.centaurs.client"})
@@ -42,6 +42,16 @@ public class AppFunctionConfig {
 	
 	@Autowired
 	ListTourTicketByDateFunc listTourTicketByDateFunc;
+	
+	@Autowired
+	ViewTourTicketByTourIdFunc viewTourTicketByTourIdFunc;
+	
+	@Bean
+	public Function<ComeInAPIRequest, ComeInAPIResponse> postViewTourTicketByTourId() throws Exception{
+		System.out.println("init....................viewTourTicketByTourId");
+		return request ->  doExecute(viewTourTicketByTourIdFunc,request );
+			
+	}
 	
 	@Bean
 	public Function<ComeInAPIRequest, ComeInAPIResponse> postListTourTicketByDate() throws Exception{
