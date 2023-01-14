@@ -16,6 +16,7 @@ import com.r2dsolution.comein.centaurs.function.ComeInAPIRequest;
 import com.r2dsolution.comein.centaurs.function.ComeInAPIResponse;
 import com.r2dsolution.comein.centaurs.function.IFunction;
 import com.r2dsolution.comein.centaurs.function.api.ListBookingByEmailFunc;
+import com.r2dsolution.comein.centaurs.function.api.ListTourBookingByEmailFunc;
 
 
 @Configuration
@@ -25,6 +26,17 @@ public class AppFunctionConfig {
 	
 	@Autowired
 	ListBookingByEmailFunc listBookingByEmailFunc;
+	
+	
+	@Autowired
+	ListTourBookingByEmailFunc listTourBookingByEmailFunc;
+	
+	@Bean
+	public Function<ComeInAPIRequest, ComeInAPIResponse> postListTourBookingByEmail() throws Exception{
+		System.out.println("init....................listTourBookingByEmail");
+		return request ->  doExecute(listTourBookingByEmailFunc,request );
+			
+	}
 	
 	@Bean
 	public Function<ComeInAPIRequest, ComeInAPIResponse> postListBookingByEmail() throws Exception{
