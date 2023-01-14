@@ -700,6 +700,73 @@ Parameters:
           "resource-path" : "$context.resourcePath"
           }
       }
+ 
+ 
+ 
+  ReserveTourTicketRequestTemplate:
+    Type: String
+    Description: request-template
+    Default: |
+      #set($allParams = $input.params())
+      {
+      "body" : "$util.escapeJavaScript($input.body)",
+      "json-body" : $input.json('$'),
+      "path" : "$context.resourcePath",
+      "profile":{
+         "email" : "$context.authorizer.claims.email",
+         "comein-id":"$context.authorizer.claims['custom:comein_id']",
+         "ref-name" : "$context.authorizer.claims.name",
+         "sub" : "$context.authorizer.claims.sub"
+        }, 
+      #set($header_params = $allParams.get('header'))
+      "headers" : {
+        "spring.cloud.function.definition" : "postReserveTourTicket" #if($header_params.size() > 0),#end
+            #foreach($paramName in $header_params.keySet())
+              "$paramName" : "$util.escapeJavaScript($header_params.get($paramName))"
+              #if($foreach.hasNext),#end
+            #end
+      },
+      #set($path_params = $allParams.get('path'))
+      "path-parameters" : {
+          #foreach($paramName in $path_params.keySet())
+          "$paramName" : "$util.escapeJavaScript($path_params.get($paramName))"
+              #if($foreach.hasNext),#end
+          #end
+      },
+      #set($query_params = $allParams.get('querystring'))
+      "query-string-parameters" : {
+          #foreach($paramName in $query_params.keySet())
+          "$paramName" : "$util.escapeJavaScript($query_params.get($paramName))"
+              #if($foreach.hasNext),#end
+          #end
+      },
+      "stage-variables" : {
+      #foreach($key in $stageVariables.keySet())
+      "$key" : "$util.escapeJavaScript($stageVariables.get($key))"
+          #if($foreach.hasNext),#end
+      #end
+      },
+      "request-context" : {
+          "account-id" : "$context.identity.accountId",
+          "api-id" : "$context.apiId",
+          "api-key" : "$context.identity.apiKey",
+          "authorizer-principal-id" : "$context.authorizer.principalId",
+          "caller" : "$context.identity.caller",
+          "cognito-authentication-provider" : "$context.identity.cognitoAuthenticationProvider",
+          "cognito-authentication-type" : "$context.identity.cognitoAuthenticationType",
+          "cognito-identity-id" : "$context.identity.cognitoIdentityId",
+          "cognito-identity-pool-id" : "$context.identity.cognitoIdentityPoolId",
+          "http-method" : "$context.httpMethod",
+          "stage" : "$context.stage",
+          "source-ip" : "$context.identity.sourceIp",
+          "user" : "$context.identity.user",
+          "user-agent" : "$context.identity.userAgent",
+          "user-arn" : "$context.identity.userArn",
+          "request-id" : "$context.requestId",
+          "resource-id" : "$context.resourceId",
+          "resource-path" : "$context.resourcePath"
+          }
+      }
        
 Globals:
   Function:
@@ -1118,6 +1185,45 @@ Resources:
       MethodResponses:
         - StatusCode: 200     
 # End API Function - ViewTourTicketByTourId 
+
+# Start API Function - ReserveTourTicket 
+  ReserveTourTicketPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref MyCentaursFunc
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${ComeInRestApi}/*/POST/tour-ticket/reserve
+
+  ReserveTourTicketResource:
+    Type: 'AWS::ApiGateway::Resource'
+    Properties:
+      RestApiId: !Ref ComeInRestApi
+      ParentId:  !Ref ListTourTicketByDateResource
+      PathPart: reserve
+
+  ReserveTourTicketMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref ComeInRestApi
+      ResourceId: !Ref ReserveTourTicketResource
+      HttpMethod: POST
+      AuthorizationType: COGNITO_USER_POOLS
+      AuthorizerId: !Ref ComeInAuthorizer
+      Integration:
+        Type: AWS
+        IntegrationHttpMethod: POST
+        Uri:  !Join ['', ['arn:aws:apigateway:', !Ref AWS::Region, ':lambda:path/2015-03-31/functions/', !GetAtt MyCentaursFunc.Arn, '/invocations']]
+        PassthroughBehavior: WHEN_NO_TEMPLATES
+        RequestTemplates: 
+          'application/json': !Ref ReserveTourTicketRequestTemplate
+        IntegrationResponses:
+          - StatusCode: 200
+            ResponseTemplates:
+              'application/json' : !Ref ComeInResponseTemplate
+      MethodResponses:
+        - StatusCode: 200     
+# End API Function - ReserveTourTicket 
 
   LambdaExecutionRole:
     Description: Creating service role in IAM for AWS Lambda

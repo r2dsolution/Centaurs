@@ -19,6 +19,7 @@ import com.r2dsolution.comein.centaurs.function.api.DeleteHotelBookingKYCFunc;
 import com.r2dsolution.comein.centaurs.function.api.ListHotelBookingByEmailFunc;
 import com.r2dsolution.comein.centaurs.function.api.ListTourBookingByEmailFunc;
 import com.r2dsolution.comein.centaurs.function.api.ListTourTicketByDateFunc;
+import com.r2dsolution.comein.centaurs.function.api.ReserveTourTicketFunc;
 import com.r2dsolution.comein.centaurs.function.api.ViewHotelBookingByBookNOFunc;
 import com.r2dsolution.comein.centaurs.function.api.ViewTourTicketByTourIdFunc;
 
@@ -45,6 +46,16 @@ public class AppFunctionConfig {
 	
 	@Autowired
 	ViewTourTicketByTourIdFunc viewTourTicketByTourIdFunc;
+	
+	@Autowired
+	ReserveTourTicketFunc reserveTourTicketFunc;
+	
+	@Bean
+	public Function<ComeInAPIRequest, ComeInAPIResponse> postReserveTourTicket() throws Exception{
+		System.out.println("init....................reserveTourTicket");
+		return request ->  doExecute(reserveTourTicketFunc,request );
+			
+	}
 	
 	@Bean
 	public Function<ComeInAPIRequest, ComeInAPIResponse> postViewTourTicketByTourId() throws Exception{
