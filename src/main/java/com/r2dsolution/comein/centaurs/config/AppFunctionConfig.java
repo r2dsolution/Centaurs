@@ -24,6 +24,7 @@ import com.r2dsolution.comein.centaurs.function.api.ViewHotelBookingByBookNOFunc
 import com.r2dsolution.comein.centaurs.function.api.ViewTourTicketByTourIdFunc;
 import com.r2dsolution.comein.centaurs.function.api.ViewTourBookingByCodeFunc;
 import com.r2dsolution.comein.centaurs.function.api.AddHotelBookingKYCFunc;
+import com.r2dsolution.comein.centaurs.function.api.AddKYCInfoFunc;
 
 @Configuration
 @ComponentScan({"com.r2dsolution.comein.centaurs.function","com.r2dsolution.comein.centaurs.business","com.r2dsolution.comein.centaurs.client"})
@@ -57,6 +58,16 @@ public class AppFunctionConfig {
 	
 	@Autowired
 	AddHotelBookingKYCFunc addHotelBookingKYCFunc;
+	
+	@Autowired
+	AddKYCInfoFunc addKYCInfoFunc;
+	
+	@Bean
+	public Function<ComeInAPIRequest, ComeInAPIResponse> postAddKYCInfo() throws Exception{
+		System.out.println("init....................addKYCInfo");
+		return request ->  doExecute(addKYCInfoFunc,request );
+			
+	}
 	
 	@Bean
 	public Function<ComeInAPIRequest, ComeInAPIResponse> postAddHotelBookingKYC() throws Exception{
