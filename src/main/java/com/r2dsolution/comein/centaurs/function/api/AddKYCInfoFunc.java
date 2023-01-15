@@ -51,7 +51,10 @@ public class AddKYCInfoFunc   extends ComeInFunction{
 //				UserKYCRepository kycRepo = ctx.getBean(UserKYCRepository.class);
 //				AdminCognitoClient client = ctx.getBean(AdminCognitoClient.class);
 				
-//				UserType cognitoUser = client.findByEmail(email);
+				UserType u = client.findByEmail(email);
+				if (u!=null) {
+					log("username: "+u.getUsername());
+				}
 //				if (cognitoUser==null) {
 //					log("not-found user by email: "+email);
 					CognitoUser	dataUser = new CognitoUser();

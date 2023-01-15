@@ -36,8 +36,20 @@ public class AppAWSConfig {
 	@Value( "${region}" )
 	public String region;
 	
+	public void withAccessKey(String key) {
+		this.accessKey=key;
+	}
+	
+	public void withSecretKey(String key) {
+		this.secretKey=key;
+	}
+	public void withMode(String m) {
+		this.mode=m;
+	}
+	
+	
     @Bean
-    AmazonSQSClientBuilder intAmazonSQSClientBuilder(AWSSecretsManager secretManager) {
+    public AmazonSQSClientBuilder intAmazonSQSClientBuilder(AWSSecretsManager secretManager) {
     	Map<String,String> awsSecrets = SecretManagerUtils.getSecret(secretManager, mode+"/sqs/comein");
     	String accessKey = awsSecrets.get("accessKey");
 		String secretKey = awsSecrets.get("secretKey");
@@ -51,7 +63,7 @@ public class AppAWSConfig {
     }
 	
 	@Bean
-    AWSCognitoIdentityProviderClientBuilder initAWSCognitoIdentityProviderClientBuilder(AWSSecretsManager secretManager) {
+    public AWSCognitoIdentityProviderClientBuilder initAWSCognitoIdentityProviderClientBuilder(AWSSecretsManager secretManager) {
     	Map<String,String> awsSecrets = SecretManagerUtils.getSecret(secretManager, mode+"/cognito/comein");
     	String _accessKey = awsSecrets.get("accessKey");
     	String _secretKey = awsSecrets.get("secretKey");

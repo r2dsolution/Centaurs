@@ -178,4 +178,14 @@ public class CognitoClient {
 	         throw e;
 		 }
 	}
+	public void withRegion(String region) {
+		this.region=region;
+	}
+	public void withUserPoolId(String id) {
+		this.userPoolId = id;
+	}
+	
+	public void withCognitoClientBuilder(AWSCognitoIdentityProviderClientBuilder builder) {
+		this.cognitoClientBuilder = builder;
+	}
 }

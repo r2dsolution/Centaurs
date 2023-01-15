@@ -25,6 +25,7 @@ public class SecretManagerUtils {
 	}
 	
 	public static Map<String,String> getSecret(AWSSecretsManager client,String secretName) {
+		System.out.println("key="+secretName);
 
 		//String secretName = mode+name;
 

@@ -1,0 +1,16 @@
+{
+	"headers": {
+	    "spring.cloud.function.definition": "postAddKYCInfo"
+	  },
+	"json-body":{
+		"email":"tawatchai@r2dsolution.com",
+		"title":"Mr",
+		"firstname":"tawatchai",
+		"lastname":"radom"
+	},
+	"profile":{
+		"email":"tawatchr0009@gmail.com",
+		"comein-id":"37149980-30ee-11ed-8f92-551a5610b200_f2b1de4d-cbd8-4817-b986-b6877898b84b",
+		"sub": "bbb"
+	}
+}
