@@ -1520,7 +1520,7 @@ Resources:
       ParentId: !GetAtt 
         - ComeInRestApi
         - RootResourceId
-      PathPart: view
+      PathPart: kyc-info
       
   AddKYCInfoResource:
     Type: 'AWS::ApiGateway::Resource'
