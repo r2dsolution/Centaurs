@@ -1452,14 +1452,14 @@ Resources:
       FunctionName: !Ref MyCentaursFunc
       Action: lambda:InvokeFunction
       Principal: apigateway.amazonaws.com
-      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${ComeInRestApi}/*/POST/tour-ticket/reserve2
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${ComeInRestApi}/*/POST/tour-ticket/reserve
 
   ReserveTourTicket2Resource:
     Type: 'AWS::ApiGateway::Resource'
     Properties:
       RestApiId: !Ref ComeInRestApi
       ParentId:  !Ref ListTourTicketByDateResource
-      PathPart: reserve2
+      PathPart: reserve
 
   ReserveTourTicket2Method:
     Type: AWS::ApiGateway::Method
