@@ -1,4 +1,4 @@
-package com.r2dsolution.comein.centaurs.model;
+package com.r2dsolution.comein.centaurs.function;
 
 import java.util.HashMap;
 import java.util.Map;

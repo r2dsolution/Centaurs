@@ -1,10 +1,13 @@
 package com.r2dsolution.comein.centaurs.command;
 
+import java.util.UUID;
+
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProviderClientBuilder;
 import com.amazonaws.services.cognitoidp.model.UserType;
 import com.amazonaws.services.secretsmanager.AWSSecretsManager;
 import com.r2dsolution.comein.centaurs.client.CognitoClient;
 import com.r2dsolution.comein.centaurs.config.AppAWSConfig;
+import com.r2dsolution.comein.centaurs.function.CognitoUser;
 
 public class CognitoCommand {
 
@@ -25,11 +28,15 @@ public class CognitoCommand {
 		client.withCognitoClientBuilder(builder);
 		UserType user =client.findByEmail("tawatchai@r2dsolution.com");
 		System.out.println("email="+user.getUsername());
+		CognitoUser newUser = new CognitoUser();
+		newUser.setEmail("tawatchr0009@gmail.com");
+		newUser.setFirstname("TTTTT");
+		newUser.setLastname("RRRRR");
+		newUser.setUsername(UUID.randomUUID().toString()+"@thecomein.com");
+		UserType user2 = client.addUser(newUser);
+		System.out.println("user2-> "+user2.getUsername());
 	}
 
-	private static AWSCognitoIdentityProviderClientBuilder initBuilder() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 }

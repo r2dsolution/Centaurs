@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
+import com.amazonaws.services.lambda.runtime.events.CognitoUserPoolPreSignUpEvent;
 import com.r2dsolution.comein.centaurs.function.ComeInAPIRequest;
 import com.r2dsolution.comein.centaurs.function.ComeInAPIResponse;
 import com.r2dsolution.comein.centaurs.function.IFunction;
@@ -22,6 +23,7 @@ import com.r2dsolution.comein.centaurs.function.api.ListTourTicketByDateFunc;
 import com.r2dsolution.comein.centaurs.function.api.ReserveTourTicketFunc;
 import com.r2dsolution.comein.centaurs.function.api.ViewHotelBookingByBookNOFunc;
 import com.r2dsolution.comein.centaurs.function.api.ViewTourTicketByTourIdFunc;
+import com.r2dsolution.comein.centaurs.function.cognito.SignUpPrePDPAInfoFunc;
 import com.r2dsolution.comein.centaurs.function.api.ViewTourBookingByCodeFunc;
 import com.r2dsolution.comein.centaurs.function.api.AddHotelBookingKYCFunc;
 import com.r2dsolution.comein.centaurs.function.api.AddKYCInfoFunc;
@@ -61,6 +63,18 @@ public class AppFunctionConfig {
 	
 	@Autowired
 	AddKYCInfoFunc addKYCInfoFunc;
+	
+	@Autowired
+	SignUpPrePDPAInfoFunc signUpPrePDPAInfoFunc;
+	
+	@Bean
+	public Function<CognitoUserPoolPreSignUpEvent, CognitoUserPoolPreSignUpEvent> cognitoSignUpPrePDPAInfo() throws Exception{
+		System.out.println("init....................cognitoSignUpPrePDPAInfo");
+		return request -> {
+			return signUpPrePDPAInfoFunc.execute(request);
+		};
+			
+	}
 	
 	@Bean
 	public Function<ComeInAPIRequest, ComeInAPIResponse> postAddKYCInfo() throws Exception{

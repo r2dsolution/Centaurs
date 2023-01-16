@@ -16,7 +16,7 @@ import com.amazonaws.services.sqs.model.GetQueueUrlRequest;
 import com.amazonaws.services.sqs.model.GetQueueUrlResult;
 import com.amazonaws.services.sqs.model.SendMessageRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.r2dsolution.comein.centaurs.model.EmailRequest;
+import com.r2dsolution.comein.centaurs.function.EmailRequest;
 import com.r2dsolution.comein.centaurs.util.DateUtils;
 import com.r2dsolution.comein.centaurs.util.StringUtils;
 

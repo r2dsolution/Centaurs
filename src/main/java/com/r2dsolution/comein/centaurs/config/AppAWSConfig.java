@@ -67,6 +67,10 @@ public class AppAWSConfig {
     	Map<String,String> awsSecrets = SecretManagerUtils.getSecret(secretManager, mode+"/cognito/comein");
     	String _accessKey = awsSecrets.get("accessKey");
     	String _secretKey = awsSecrets.get("secretKey");
+    	
+    	
+    	System.out.println("_accessKey="+_accessKey);
+    	
     	//String _region = awsSecrets.get("region");
     	BasicAWSCredentials awsCreds = new BasicAWSCredentials(_accessKey,_secretKey);
     	return AWSCognitoIdentityProviderClientBuilder.standard()
