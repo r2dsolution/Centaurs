@@ -1446,26 +1446,26 @@ Resources:
 # End API Function - ViewTourTicketByTourId 
 
 # Start API Function - ReserveTourTicket 
-  ReserveTourTicketPermission:
+  ReserveTourTicket2Permission:
     Type: AWS::Lambda::Permission
     Properties:
       FunctionName: !Ref MyCentaursFunc
       Action: lambda:InvokeFunction
       Principal: apigateway.amazonaws.com
-      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${ComeInRestApi}/*/POST/tour-ticket/reserve
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${ComeInRestApi}/*/POST/tour-ticket/reserve2
 
-  ReserveTourTicketResource:
+  ReserveTourTicket2Resource:
     Type: 'AWS::ApiGateway::Resource'
     Properties:
       RestApiId: !Ref ComeInRestApi
       ParentId:  !Ref ListTourTicketByDateResource
-      PathPart: reserve
+      PathPart: reserve2
 
-  ReserveTourTicketMethod:
+  ReserveTourTicket2Method:
     Type: AWS::ApiGateway::Method
     Properties:
       RestApiId: !Ref ComeInRestApi
-      ResourceId: !Ref ReserveTourTicketResource
+      ResourceId: !Ref ReserveTourTicket2Resource
       HttpMethod: POST
       AuthorizationType: COGNITO_USER_POOLS
       AuthorizerId: !Ref ComeInAuthorizer
